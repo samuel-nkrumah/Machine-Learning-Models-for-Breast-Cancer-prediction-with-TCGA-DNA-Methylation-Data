@@ -1,5 +1,5 @@
 ---
-title: "Breast Cancer Prediction with Elastic Net and K-Nearest Neighbor using TCGA DNA Methylation data"
+title: "Elastic Net and K-Nearest Neighbor Breast Cancer Prediction using TCGA DNA Methylation data"
 author: "Samuel Nkrumah"
 date: "9th September 2021"
 output: html_document
@@ -13,6 +13,8 @@ output: html_document
 # 1 Load appropriate packages
 ```{r eval= FALSE}
 library('TCGAbiolinks')
+library('SummarizedExperiment')
+library("factoextra")
 library('limma')
 library('edgeR')
 library('caret')
@@ -22,7 +24,6 @@ library('gplots')
 library('survminer')
 library('stringr')
 library("RColorBrewer")
-library("gProfileR")
 library("genefilter")
 library('class')
 library('e1071')
@@ -167,7 +168,7 @@ comparison_ML_models <- cbind(EN_confusion_matrix, KNN_confusion_matrix)
 new_EN_genes <- coef(new_EN_model, s='lambda.min')
 new_EN_genes <- new_EN_genes[new_EN_genes[,1] != 0, ]
 new_en_genes <- new_EN_genes[-1]
-new_relevant_genes <- names(new_EN_genes)
+new_relevant_genes <- names(new_EN_genes) 
 
 DNA_meth_gene_regions <- rowData(DNA_meth_data)
 new_relevant_genes_names <- DNA_meth_gene_regions[new_relevant_genes, 'Gene_Symbol']
@@ -181,6 +182,10 @@ clust = function(x) hclust(x, method="complete")
 dist = function(x) as.dist((1-cor(t(x)))/2)
 
 #Interestingly, hierarchical clustering shows differential methylation of genes used by EN to classify samples
+
+#If you develop problems getting the heatmap plot, check the new_relevant_genes. 
+#Delete the Intercept value which may still be in the list
+#new_relevant_genes <- new_relevant_genes[-1]
 gene_heatmap = heatmap.2(
   t(beta_values[,new_relevant_genes]),
   scale="row",          # scale the values for each gene (row)
