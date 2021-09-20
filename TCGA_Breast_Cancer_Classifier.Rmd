@@ -1,5 +1,5 @@
 ---
-title: "Elastic Net and K-Nearest Neighbor Breast Cancer Prediction using TCGA DNA Methylation data"
+title: "Elastic Net and K-Nearest Neighbor Breast Cancer Classification using TCGA DNA Methylation data"
 author: "Samuel Nkrumah"
 date: "9th September 2021"
 output: html_document
