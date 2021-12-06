@@ -89,7 +89,7 @@ y_train <- sample_types[train_ids]
 y_test <- sample_types[-train_ids]
 ```
 
-# 3.2 Build Elastic Net model with bata values. Make predictions about sample type
+# 3.2 Build Elastic Net model with beta values. Make predictions about sample type
 ```{r eval=FALSE}
 EN_model <- cv.glmnet(
   x = x_train,
